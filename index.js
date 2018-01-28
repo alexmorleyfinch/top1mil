@@ -12,14 +12,14 @@ request
     entry
       .pipe(csv2())
       .on('data', function(data) {
-        var progress = Math.round(parseInt(data[0], 10) / 1000000 * 100);
+        var progress = Math.round(parseInt(data[0], 10) / 10000);
         domains.push(data[1]);
-        process.stdout.write('Progress: ' + progress + '\r');
+        process.stdout.write('Progress: ' + progress + '%\r');
       })
       .on('end', function() {
-        domains.sort();
-
         var file = fs.createWriteStream('domains.txt');
+
+        domains.sort();
 
         file.on('error', function(err) {
           console.error(err);
