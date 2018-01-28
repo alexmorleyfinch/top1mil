@@ -7,7 +7,7 @@ It has a very specific use case and no configurable options, so it's likely to b
 But then again it's just another repo to have.
 
 ```
-git clone https://github.com/alexmorleyfinch/unused-es6-imports.git
+git clone https://github.com/alexmorleyfinch/top1mil.git
 npm install
 npm run start
 ```
