@@ -7,35 +7,32 @@ var mkdirp = require('mkdirp');
 
 var domains = [];
 
-mkdirp('output', function (err) {
-  if (err) {
-    return console.error(err);
-  }
-  request
-    .get('http://s3.amazonaws.com/alexa-static/top-1m.csv.zip')
-    .pipe(unzip.Parse())
-    .on('entry', function(entry) {
-      entry
-        .pipe(csv2())
-        .on('data', function(data) {
-          var progress = Math.round(parseInt(data[0], 10) / 10000);
-          domains.push(data[1]);
-          process.stdout.write('Progress: ' + progress + '%\r');
-        })
-        .on('end', function() {
-          var file = fs.createWriteStream('output/domains.txt');
+mkdirp.sync('output');
 
-          domains.sort();
+request
+  .get('http://s3.amazonaws.com/alexa-static/top-1m.csv.zip')
+  .pipe(unzip.Parse())
+  .on('entry', function(entry) {
+    entry
+      .pipe(csv2())
+      .on('data', function(data) {
+        var progress = Math.round(parseInt(data[0], 10) / 10000);
+        domains.push(data[1]);
+        process.stdout.write('Progress: ' + progress + '%\r');
+      })
+      .on('end', function() {
+        var file = fs.createWriteStream('output/domains.txt');
 
-          file.on('error', function(err) {
-            console.error(err);
-          });
+        domains.sort();
 
-          domains.forEach(function(domain) {
-            file.write(domain + '\n');
-          });
-
-          file.end();
+        file.on('error', function(err) {
+          console.error(err);
         });
-    });
+
+        domains.forEach(function(domain) {
+          file.write(domain + '\n');
+        });
+
+        file.end();
+      });
 });
