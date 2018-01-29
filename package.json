@@ -1,8 +1,7 @@
 {
   "name": "top1mil",
   "version": "1.0.0",
-  "description":
-    "Incredibly simple package which sorts and saves the top 1 million websites from http://s3.amazonaws.com/alexa-static/top-1m.csv.zip",
+  "description": "Incredibly simple package which sorts and saves the top 1 million websites from http://s3.amazonaws.com/alexa-static/top-1m.csv.zip",
   "main": "index.js",
   "scripts": {
     "start": "nodejs src/index.js"
@@ -11,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "csv2": "^0.1.1",
+    "mkdirp": "^0.5.1",
     "request": "^2.83.0",
     "unzip": "^0.1.11"
   }
