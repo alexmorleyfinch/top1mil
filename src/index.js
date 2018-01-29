@@ -17,7 +17,7 @@ request
         process.stdout.write('Progress: ' + progress + '%\r');
       })
       .on('end', function() {
-        var file = fs.createWriteStream('domains.txt');
+        var file = fs.createWriteStream('output/domains.txt');
 
         domains.sort();
 

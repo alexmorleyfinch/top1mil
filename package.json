@@ -5,8 +5,7 @@
     "Incredibly simple package which sorts and saves the top 1 million websites from http://s3.amazonaws.com/alexa-static/top-1m.csv.zip",
   "main": "index.js",
   "scripts": {
-    "start": "nodejs index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodejs src/index.js"
   },
   "author": "",
   "license": "ISC",
