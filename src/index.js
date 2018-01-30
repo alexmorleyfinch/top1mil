@@ -2,8 +2,12 @@ var request = require('request');
 var unzip = require('unzip');
 var csv2 = require('csv2');
 var fs = require('fs');
+var mkdirp = require('mkdirp');
+
 
 var domains = [];
+
+mkdirp.sync('output');
 
 request
   .get('http://s3.amazonaws.com/alexa-static/top-1m.csv.zip')
@@ -17,7 +21,7 @@ request
         process.stdout.write('Progress: ' + progress + '%\r');
       })
       .on('end', function() {
-        var file = fs.createWriteStream('domains.txt');
+        var file = fs.createWriteStream('output/domains.txt');
 
         domains.sort();
 
