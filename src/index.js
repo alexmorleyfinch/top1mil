@@ -3,6 +3,13 @@ var unzip = require('unzip');
 var csv2 = require('csv2');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
+var argv = require('yargs')
+    .option('s', {
+        alias : 'sort',
+        describe: 'sorts the output in alphabetical order',
+        type: 'boolean'
+    })
+    .argv;
 
 
 var domains = [];
@@ -23,7 +30,9 @@ request
       .on('end', function() {
         var file = fs.createWriteStream('output/domains.txt');
 
-        domains.sort();
+        if (argv.s) {
+            domains.sort();
+        }
 
         file.on('error', function(err) {
           console.error(err);
