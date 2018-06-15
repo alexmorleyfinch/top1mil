@@ -13,7 +13,7 @@ sort --key 2  --field-separator "," -d top-1m.csv > sorted-top-1m.csv
 rm -f top-1m.csv.zip top-1m.csv
 ```
 
-> Written courtesy of [Dolondro](https://github.com/Dolondro)
+> Written courtesy of <a href="https://github.com/Dolondro" target="_blank">Dolondro</a>
 
 Anywhoo... If you want to use this madness (why - why would you)
 
