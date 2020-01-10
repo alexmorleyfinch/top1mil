@@ -1,9 +1,9 @@
-var request = require('request');
-var unzip = require('unzip');
-var csv2 = require('csv2');
-var fs = require('fs');
-var mkdirp = require('mkdirp');
-var argv = require('yargs')
+const request = require('request');
+const unzip = require('unzip');
+const csv2 = require('csv2');
+const fs = require('fs');
+const mkdirp = require('mkdirp');
+const argv = require('yargs')
     .option('s', {
         alias : 'sort',
         describe: 'sorts the output in alphabetical order',
@@ -12,33 +12,31 @@ var argv = require('yargs')
     .argv;
 
 
-var domains = [];
+let domains = [];
 
 mkdirp.sync('output');
 
 request
   .get('http://s3.amazonaws.com/alexa-static/top-1m.csv.zip')
   .pipe(unzip.Parse())
-  .on('entry', function(entry) {
+  .on('entry', entry => {
     entry
       .pipe(csv2())
-      .on('data', function(data) {
-        var progress = Math.round(parseInt(data[0], 10) / 10000);
+      .on('data', data => {
+        let progress = Math.round(parseInt(data[0], 10) / 10000);
         domains.push(data[1]);
         process.stdout.write('Progress: ' + progress + '%\r');
       })
-      .on('end', function() {
-        var file = fs.createWriteStream('output/domains.txt');
+      .on('end', () => {
+        let file = fs.createWriteStream('output/domains.txt');
 
         if (argv.s) {
             domains.sort();
         }
 
-        file.on('error', function(err) {
-          console.error(err);
-        });
+        file.on('error', console.error);
 
-        domains.forEach(function(domain) {
+        domains.forEach(domain => {
           file.write(domain + '\n');
         });
 
