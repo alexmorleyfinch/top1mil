@@ -25,7 +25,7 @@ request
       .on('data', data => {
         let progress = Math.round(parseInt(data[0], 10) / 10000);
         domains.push(data[1]);
-        process.stdout.write('Progress: ' + progress + '%\r');
+        process.stdout.write(`Progress: ${progress} %\r`);
       })
       .on('end', () => {
         let file = fs.createWriteStream('output/domains.txt');
@@ -37,7 +37,7 @@ request
         file.on('error', console.error);
 
         domains.forEach(domain => {
-          file.write(domain + '\n');
+          file.write(`${domain}\n`);
         });
 
         file.end();
